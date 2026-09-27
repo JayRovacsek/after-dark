@@ -1,38 +1,40 @@
-<div class="note-container" style="border: {{ border | default(value=" 1px solid #e0e0e0") }}">
-  {% if clickable | default(value=false) %}
-  <button class="note-toggle">
-    {% if center | default(value=false) and header %}
-    <div class="note-center">
-      {{ header | markdown | safe }}
-    </div>
-    {% elif header %}
-    <div class="note-icon">
-      {{ header | markdown | safe }}
-    </div>
-    {% endif %}
-  </button>
+{% component note(border="1px solid #e0e0e0", header="", clickable=false, center=false, hidden=false) %}
+<div class="note-container" style="border: {{ border }}">
+{% if clickable %}
+<button class="note-toggle">
+{% if center and header %}
+<div class="note-center">
+{{ header | markdown | safe }}
+</div>
+{% elif header %}
+<div class="note-icon">
+{{ header | markdown | safe }}
+</div>
+{% endif %}
+</button>
 
-  {% if hidden | default(value=false) %}
-  <div class="note-content" style="display: none;">
-    {% else %}
-    <div class="note-content" style="display: block;">
-      {% endif %}
-      {{ body | markdown | safe }}
-    </div>
+{% if hidden %}
+<div class="note-content" style="display: none;">
+{% else %}
+<div class="note-content" style="display: block;">
+{% endif %}
+{{ body | markdown | safe }}
+</div>
 
-    {% else %}
-    {% if header %}
-    <div class="note-header">
-      {% if center | default(value=false) %}
-      <div class="note-center">
-        {{ header | markdown | safe }}
-      </div>
-      {% endif %}
-    </div>
-    {% endif %}
+{% else %}
+{% if header %}
+<div class="note-header">
+{% if center %}
+<div class="note-center">
+{{ header | markdown | safe }}
+</div>
+{% endif %}
+</div>
+{% endif %}
 
-    <div class="note-content">
-      {{ body | markdown | safe }}
-    </div>
-    {% endif %}
-  </div>
+<div class="note-content">
+{{ body | markdown | safe }}
+</div>
+{% endif %}
+</div>
+{% endcomponent note %}
